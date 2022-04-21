@@ -1,1 +1,1 @@
-[image](VScode%20download.png)
+(VScode%20download.png)
