@@ -18,11 +18,27 @@ public class MarkdownParse {
             int closeParen = markdown.indexOf(")", openParen);
 
             //Check for absence of links
-            while(openBracket == -1 || closeBracket == -1 || openParen == -1 || 
-               closeParen == -1 || markdown.charAt(currentIndex) == ' ') {
-                currentIndex += 1;
-                
+            if(openBracket < 0 || closeBracket < 0 || openParen < 0 || 
+               closeParen < 0) {
+                currentIndex++;
+                continue;
             }
+
+            if (closeBracket == openBracket + 1) {
+                currentIndex = closeBracket + 1;
+                continue;
+            }
+
+            if (openParen != closeBracket + 1) {
+                currentIndex = openParen + 1;
+                continue;
+            }
+
+            if (closeParen == openParen + 1) {
+                currentIndex = closeParen + 1;
+                continue;
+            }
+
 
             //Check if we've accidentally parsed an image link
             if(markdown.charAt(0) == '!'){ //If .md file starts with image
@@ -30,9 +46,7 @@ public class MarkdownParse {
                 continue;
             }
             //In all other cases
-            if((openBracket != 0 && markdown.charAt(openBracket-1) == '!') 
-                || (closeBracket == openBracket + 1)
-                || (openParen != closeBracket + 1)) {
+            if(openBracket != 0 && markdown.charAt(openBracket-1) == '!'){
                 currentIndex = closeParen + 1;
                 continue;
             }

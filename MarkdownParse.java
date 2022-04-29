@@ -17,22 +17,50 @@ public class MarkdownParse {
             int openParen = markdown.indexOf("(", closeBracket);
             int closeParen = markdown.indexOf(")", openParen);
 
-            if (((openBracket != currentIndex + 1) && (markdown.charAt(openBracket-1) == '!'))
-                ||(closeBracket == openBracket + 1)
-                ||(openParen != closeBracket + 1)) {
-                currentIndex = closeParen + 1;
-            }
-            else {
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
-                currentIndex = closeParen + 1;
-            }
-            if (openBracket < 0) {
+            //Check for absence of links
+            if(openBracket < 0 || closeBracket < 0 || openParen < 0 || 
+               closeParen < 0) {
                 currentIndex++;
+                continue;
             }
-            if ((closeBracket < 0) || (openParen < 0) || (closeParen < 0)) {
-                currentIndex = openBracket + 1;
+
+            if (closeBracket == openBracket + 1) {
+                currentIndex = closeBracket + 1;
+                continue;
             }
+
+            if (openParen != closeBracket + 1) {
+                currentIndex = openParen + 1;
+                continue;
+            }
+
+            if (closeParen == openParen + 1) {
+                currentIndex = closeParen + 1;
+                continue;
+            }
+
+
+            //Check if we've accidentally parsed an image link
+            if(markdown.charAt(0) == '!'){ //If .md file starts with image
+                currentIndex = closeParen + 1;
+                continue;
+            }
+            //In all other cases
+            if(openBracket != 0 && markdown.charAt(openBracket-1) == '!'){
+                currentIndex = closeParen + 1;
+                continue;
+            }
+
+            //Make sure closed bracket is right next to parentheses
+            if(closeBracket != openParen - 1) {
+                currentIndex = closeParen + 1;
+                continue;
+            }
+
+            toReturn.add(markdown.substring(openParen + 1, closeParen));
+            currentIndex = closeParen + 1;
         }
+
         return toReturn;
     }
 
