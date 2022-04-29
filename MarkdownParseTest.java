@@ -30,10 +30,10 @@ public class MarkdownParseTest {
     @Test
     public void testFailing() throws IOException {
         
-        Path fileName = Path.of("fail-test1.md");
-        String content = Files.readString(fileName);
-        ArrayList<String> links = MarkdownParse.getLinks(content);
+        Path fileName1 = Path.of("fail-test1.md");
+        String content1 = Files.readString(fileName1);
+        ArrayList<String> links1 = MarkdownParse.getLinks(content1);
     
-        assertEquals(List.of("https://code.visualstudio.com/, VScode%20download.png"), links);
+        assertEquals(List.of("https://code.visualstudio.com/, VScode%20download.png"), links1);
     }
 }
