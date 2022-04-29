@@ -18,9 +18,10 @@ public class MarkdownParse {
             int closeParen = markdown.indexOf(")", openParen);
 
             //Check for absence of links
-            if(openBracket == -1 || closeBracket == -1 || openParen == -1 || 
-               closeParen == -1) {
-                break;
+            while(openBracket == -1 || closeBracket == -1 || openParen == -1 || 
+               closeParen == -1 || markdown.charAt(currentIndex) == ' ') {
+                currentIndex += 1;
+                
             }
 
             //Check if we've accidentally parsed an image link
@@ -29,7 +30,9 @@ public class MarkdownParse {
                 continue;
             }
             //In all other cases
-            if(openBracket != 0 && markdown.charAt(openBracket-1) == '!'){
+            if((openBracket != 0 && markdown.charAt(openBracket-1) == '!') 
+                || (closeBracket == openBracket + 1)
+                || (openParen != closeBracket + 1)) {
                 currentIndex = closeParen + 1;
                 continue;
             }
