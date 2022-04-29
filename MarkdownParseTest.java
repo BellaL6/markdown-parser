@@ -40,7 +40,7 @@ public class MarkdownParseTest {
     @Test
     public void testFailing2() throws IOException {
         
-        Path fileName2 = Path.of("test-file-4.md");
+        Path fileName2 = Path.of("test-file-4-copy.md");
         String content2 = Files.readString(fileName2);
         ArrayList<String> links2 = MarkdownParse.getLinks(content2);
     
