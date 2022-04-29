@@ -34,6 +34,6 @@ public class MarkdownParseTest {
         String content1 = Files.readString(fileName1);
         ArrayList<String> links1 = MarkdownParse.getLinks(content1);
     
-        assertEquals(List.of("https://code.visualstudio.com/, VScode%20download.png"), links1);
+        assertEquals(List.of("https://code.visualstudio.com/", "VScode%20download.png"), links1);
     }
 }
