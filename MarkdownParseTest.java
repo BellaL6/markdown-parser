@@ -36,4 +36,14 @@ public class MarkdownParseTest {
     
         assertEquals(List.of("https://code.visualstudio.com/", "VScode%20download.png"), links1);
     }
+
+    @Test
+    public void testFailing2() throws IOException {
+        
+        Path fileName2 = Path.of("test-file-4.md");
+        String content2 = Files.readString(fileName2);
+        ArrayList<String> links2 = MarkdownParse.getLinks(content2);
+    
+        assertEquals(List.of("google.com"), links2);
+    }
 }
